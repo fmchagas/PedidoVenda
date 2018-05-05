@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+	<title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
+
+	<h:outputStylesheet library="css" name="principal.css" />
+	<h:outputScript library="js" name="jquery.maskMoney.js" />
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus styleClass="ajax-status">
+		<f:facet name="start">
+			<h:graphicImage library="images" name="carregando.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputLabel value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<header>
+		<div style="float: left">
+			<h:link outcome="/Home">
+				<h:graphicImage library="images" name="logo.png" />
+			</h:link>
+		</div>
+
+		<div style="float: right; margin-right: 110px">
+			<span
+				style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+				Olá usuário! </span>
+
+			<h:form style="display: inline-block">
+				<p:menubar styleClass="menu-sistema">
+					<p:submenu label="Cadastros" icon="ui-icon-contact">
+						<p:menuitem value="Clientes" url="#" />
+						<p:menuitem value="Usuários" url="#" />
+						<p:separator />
+						<p:menuitem value="Categorias" url="#" />
+						<p:menuitem value="Produtos"
+							url="/produtos/ConsultaProdutos.xhtml" />
+					</p:submenu>
+					<p:submenu label="Pedidos">
+						<p:menuitem value="Novo Pedido"
+							url="/pedidos/CadastroPedido.xhtml" />
+							<p:menuitem value="Consulta"
+							url="/pedidos/ConsultaPedidos.xhtml" />
+					</p:submenu>
+
+					<p:menuitem value="Quit" url="" icon="ui-icon-close" />
+				</p:menubar>
+			</h:form>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+
+
+	<div id="conteudo">
+		<ui:insert name="corpo"></ui:insert>
+	</div>
+
+	<hr style="margin-top: 20px" />
+
+	<footer> Curso Online de Sistemas Comerciais Java EE com CDI,
+		JPA e PrimeFaces </footer>
+
+	<script>
+			function configurarMoeda(){
+				$(".moeda").maskMoney({ prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',' });
+			}
+
+			$(document).ready(function(){
+				configurarMoeda();
+			});
+		</script>
+</h:body>
+</html>

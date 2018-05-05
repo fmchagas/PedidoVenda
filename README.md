@@ -1,0 +1,2 @@
+Sistama de Pedido de venda proposto como projeto final do curso de Java EE com CDI(implementação weld), JPA(implementação Hibernate) usamos a biblioteca de componentes PrimeFaces,
+o WebCointainer Tomcat e para segurança o Spring Securit, na parte de log utilizamos Log4j com Commons Logging que abstrai a implementação de logging.

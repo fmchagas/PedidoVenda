@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:dataTable id="tabelaItens" value="#{cadastroPedidoBean.itens}" var="item">
+
+		<p:column headerText="SKU" style="text-align: lefth; width: 182px">
+			<p:inputText value="#{item.toString()}" />
+		</p:column>
+		
+		<p:column headerText="Produto">
+			<p:autoComplete styleClass="produto-tabela" >
+			</p:autoComplete>
+		</p:column>
+		
+		<p:column headerText="Valor unitário"
+			style="text-align: right; width: 100px">
+			<h:outputText value="R$ 0,00">
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Quantidade"
+			style="text-align: center; width: 100px">
+			<p:inputText size="8" value="1">
+			</p:inputText>
+		</p:column>
+
+		<p:column headerText="Estoque"
+			style="text-align: center; width: 100px">
+			<h:outputText value="0" />
+		</p:column>
+
+		<p:column headerText="Valor total"
+			style="text-align: right; width: 100px">
+			<h:outputText value="5000,00">
+
+			</h:outputText>
+		</p:column>
+
+		<p:columnGroup type="footer">
+			<p:row>
+				<p:column colspan="5" footerText="Subtotal"
+					style="text-align: right" />
+				<p:column style="text-align: right">
+					<f:facet name="footer">
+						<h:outputText value="60000,00">
+
+						</h:outputText>
+					</f:facet>
+				</p:column>
+			</p:row>
+		</p:columnGroup>
+		
+	</p:dataTable>
+
+</ui:composition>
