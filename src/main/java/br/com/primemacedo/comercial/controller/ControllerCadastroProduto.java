@@ -5,13 +5,26 @@ import java.io.Serializable;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
+import br.com.primemacedo.comercial.model.Produto;
+
 @Named
 @ViewScoped
 public class ControllerCadastroProduto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public void salvar() {
-		throw new RuntimeException("Teste de exceção");
+	private Produto produto;
+	
+	public ControllerCadastroProduto() {
+		produto = new Produto();
 	}
+	
+	public void salvar() {
+		
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+		
 }

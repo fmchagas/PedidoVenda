@@ -11,7 +11,7 @@
 		<h1>Cadastro de Produto</h1>
 
 		<h:form>
-
+			<p:messages autoUpdate="true" closable="true" />
 			<p:toolbar style="margin-top:20px">
 				<p:toolbarGroup>
 					<p:button value="Novo" outcome="/produtos/CadastroProduto" />
@@ -26,27 +26,29 @@
 			<p:panelGrid columns="2" id="painel"
 				style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
 				<p:outputLabel value="SKU" for="sku" />
-				<p:inputText id="sku" size="20" maxlength="20" />
+				<p:inputText id="sku" size="20" maxlength="20" value="#{controllerCadastroProduto.produto.sku}"/>
 
 				<p:outputLabel value="Nome" for="nome" />
-				<p:inputText id="nome" size="60" maxlength="80" />
+				<p:inputText id="nome" size="60" maxlength="80" value="#{controllerCadastroProduto.produto.nome}"/>
 
 				<p:outputLabel value="Categoria" for="categoria" />
-				<p:selectOneMenu id="categoria">
+				<p:selectOneMenu id="categoria" value="#{controllerCadastroProduto.produto.categoria.categoriaPai}">
 					<f:selectItem itemLabel="Selecione a categoria" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Subcategoria" for="subCategoria" />
-				<p:selectOneMenu id="subCategoria">
+				<p:selectOneMenu id="subCategoria" value="#{controllerCadastroProduto.produto.categoria.subcategorias}">
 					<f:selectItem itemLabel="Selecione a subcategoria" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Valor unitário" for="valorunitario" />
 				<p:inputNumber id="valorunitario" symbol="R$ " decimalSeparator=","
-					thousandSeparator="." size="10" maxlength="10" minValue="0" />
+					thousandSeparator="." size="10" maxlength="10" minValue="0" 
+					value="#{controllerCadastroProduto.produto.valorUnitario}" />
 
 				<p:outputLabel value="Estoque" for="estoque" />
-				<p:inputText id="estoque" size="10" maxlength="4" minValue="0" />
+				<p:inputText id="estoque" size="10" maxlength="5" minValue="0"
+				value="#{controllerCadastroProduto.produto.quantidadeEstoque}" />
 			</p:panelGrid>
 
 		</h:form>
