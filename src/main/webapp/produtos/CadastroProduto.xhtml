@@ -3,11 +3,17 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
 	template="/WEB-INF/template/Layout.xhtml">
 
 	<ui:define name="titulo">Novo Produto</ui:define>
 
 	<ui:define name="corpo">
+		<f:metadata>
+			<o:viewParam name="produto" value="#{controllerCadastroProduto.produto}" />
+			<f:event listener="#{controllerCadastroProduto.inicializar()}"
+				type="preRenderView"></f:event>
+		</f:metadata>
 		<h1>Cadastro de Produto</h1>
 
 		<h:form>
@@ -16,39 +22,50 @@
 				<p:toolbarGroup>
 					<p:button value="Novo" outcome="/produtos/CadastroProduto" />
 					<p:commandButton value="Salvar" id="botaoSalvar"
-					action="#{controllerCadastroProduto.salvar}" ajax="true" />
+						action="#{controllerCadastroProduto.salvar}" update="@form" ajax="true" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Pesquisar" outcome="/produtos/ConsultaProdutos"/>
+					<p:button value="Pesquisar" outcome="/produtos/ConsultaProdutos" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
 			<p:panelGrid columns="2" id="painel"
 				style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
 				<p:outputLabel value="SKU" for="sku" />
-				<p:inputText id="sku" size="20" maxlength="20" value="#{controllerCadastroProduto.produto.sku}"/>
+				<p:inputText id="sku" size="20" maxlength="20"
+					value="#{controllerCadastroProduto.produto.sku}" />
 
 				<p:outputLabel value="Nome" for="nome" />
-				<p:inputText id="nome" size="60" maxlength="80" value="#{controllerCadastroProduto.produto.nome}"/>
+				<p:inputText id="nome" size="60" maxlength="80"
+					value="#{controllerCadastroProduto.produto.nome}" />
 
 				<p:outputLabel value="Categoria" for="categoria" />
-				<p:selectOneMenu id="categoria" value="#{controllerCadastroProduto.produto.categoria.categoriaPai}">
+				<p:selectOneMenu id="categoria"
+					value="#{controllerCadastroProduto.categoriaPai}">
 					<f:selectItem itemLabel="Selecione a categoria" />
+					<f:selectItems
+						value="#{controllerCadastroProduto.categoriasRaizes}"
+						var="catRaiz" itemLabel="#{catRaiz.descricao}" itemValue="#{catRaiz}" />
+						<p:ajax listener="#{controllerCadastroProduto.carregarSubCategorias}" update="subCategoria" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Subcategoria" for="subCategoria" />
-				<p:selectOneMenu id="subCategoria" value="#{controllerCadastroProduto.produto.categoria.subcategorias}">
+				<p:selectOneMenu id="subCategoria"
+					value="#{controllerCadastroProduto.produto.categoria}">
 					<f:selectItem itemLabel="Selecione a subcategoria" />
+					<f:selectItems
+						value="#{controllerCadastroProduto.subCategorias}"
+						var="subCategorias" itemLabel="#{subCategorias.descricao}" itemValue="#{subCategorias}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Valor unitário" for="valorunitario" />
 				<p:inputNumber id="valorunitario" symbol="R$ " decimalSeparator=","
-					thousandSeparator="." size="10" maxlength="10" minValue="0" 
+					thousandSeparator="." size="10" maxlength="10" minValue="0"
 					value="#{controllerCadastroProduto.produto.valorUnitario}" />
 
 				<p:outputLabel value="Estoque" for="estoque" />
 				<p:inputText id="estoque" size="10" maxlength="5" minValue="0"
-				value="#{controllerCadastroProduto.produto.quantidadeEstoque}" />
+					value="#{controllerCadastroProduto.produto.quantidadeEstoque}" />
 			</p:panelGrid>
 
 		</h:form>

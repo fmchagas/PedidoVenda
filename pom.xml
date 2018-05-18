@@ -35,6 +35,14 @@
 			<version>2.2.8</version>
 		</dependency>
 
+		<!-- OminiFaces(utilitarios para JSF) -->
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<!-- Prime Faces(Biblioteca componentes) -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -48,15 +56,15 @@
 			<artifactId>weld-servlet</artifactId>
 			<version>1.1.10.Final</version>
 		</dependency>
-		
-		<!-- Log4J -->    	
+
+		<!-- Log4J -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Commons Logging (abstrai a implementação de logging) -->
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -64,7 +72,15 @@
 			<version>1.1.3</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
+		<!--Commons Lang (utilidades) -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<!-- Núcleo do Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -72,7 +88,7 @@
 			<version>4.2.3.Final</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Implementação de EntityManager da JPA -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -80,7 +96,7 @@
 			<version>4.2.3.Final</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Implementacao do Bean Validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
