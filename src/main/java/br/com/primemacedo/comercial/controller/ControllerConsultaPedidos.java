@@ -1,26 +1,50 @@
 package br.com.primemacedo.comercial.controller;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
-@RequestScoped
-public class ControllerConsultaPedidos {
+import br.com.primemacedo.comercial.model.Pedido;
+import br.com.primemacedo.comercial.model.StatusPedido;
+import br.com.primemacedo.comercial.repository.Pedidos;
+import br.com.primemacedo.comercial.repository.filter.PedidoFilter;
 
-	private List<Integer> pedidosFiltrados;
-	
+@Named
+@ViewScoped
+public class ControllerConsultaPedidos implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Pedidos pedidos;
+
+	private List<Pedido> pedidosFiltrados;
+	private PedidoFilter filtro;
+
 	public ControllerConsultaPedidos() {
-		pedidosFiltrados = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			pedidosFiltrados.add(i);
-		}
+		filtro = new PedidoFilter();
 	}
 
-	public List<Integer> getPedidosFiltrados() {
+	public void pesquisar() {
+		this.pedidosFiltrados = this.pedidos.filtrados(this.filtro);
+	}
+	
+	public StatusPedido[] getStatues() {
+		return StatusPedido.values();
+	}
+
+	public List<Pedido> getPedidosFiltrados() {
 		return pedidosFiltrados;
 	}
-	
+
+	public PedidoFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(PedidoFilter filtro) {
+		this.filtro = filtro;
+	}
 }
