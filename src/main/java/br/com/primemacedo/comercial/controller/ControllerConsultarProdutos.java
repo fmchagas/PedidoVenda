@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.Produtos;
 import br.com.primemacedo.comercial.repository.filter.ProdutoFilter;
+import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
@@ -19,6 +20,7 @@ public class ControllerConsultarProdutos implements Serializable {
 	@Inject
 	private Produtos produtos;
 
+	private Produto produtoSelecionado;
 	private List<Produto> produtosFiltrados;
 	private ProdutoFilter filtro;
 
@@ -28,7 +30,16 @@ public class ControllerConsultarProdutos implements Serializable {
 
 	public void pesquisar() {
 		produtosFiltrados = produtos.filtrados(filtro);
-		//System.out.println();
+	}
+
+	public void excluir() {
+		produtos.remover(produtoSelecionado);
+		produtosFiltrados.remove(produtoSelecionado);
+
+		StringBuilder sb = new StringBuilder().append("Produto ").append(produtoSelecionado.getSku())
+				.append(" Excluido com sucesso.");
+
+		FacesUtil.addInfoMessage(sb.toString());
 	}
 
 	public List<Produto> getProdutosFiltrados() {
@@ -37,6 +48,14 @@ public class ControllerConsultarProdutos implements Serializable {
 
 	public ProdutoFilter getFiltro() {
 		return filtro;
+	}
+
+	public Produto getProdutoSelecionado() {
+		return produtoSelecionado;
+	}
+
+	public void setProdutoSelecionado(Produto produtoSelecionado) {
+		this.produtoSelecionado = produtoSelecionado;
 	}
 
 }

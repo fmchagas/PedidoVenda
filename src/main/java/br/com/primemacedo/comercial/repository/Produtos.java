@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -16,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.filter.ProdutoFilter;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jpa.Transactional;
 
 public class Produtos implements Serializable {
@@ -28,6 +30,10 @@ public class Produtos implements Serializable {
 	@Transactional
 	public Produto guardar(Produto produto) {
 		return manager.merge(produto);
+	}
+	
+	public Produto findById(Long id) {
+		return manager.find(Produto.class, id);
 	}
 
 	public Produto findBySku(String sku) {
@@ -55,8 +61,14 @@ public class Produtos implements Serializable {
 		return criteria.addOrder(Order.asc("nome")).list();
 	}
 
-	public Produto findById(Long id) {
-		return manager.find(Produto.class, id);
+	@Transactional
+	public void remover(Produto produto) {
+		try {
+			produto = findById(produto.getId());
+			manager.remove(produto);
+			manager.flush();
+		} catch (PersistenceException e) {
+			throw new NegocioException("Produto não pode ser excluido.");
+		}
 	}
-
 }

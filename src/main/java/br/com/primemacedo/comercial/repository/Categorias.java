@@ -15,12 +15,12 @@ public class Categorias implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
-	public List<Categoria> raizes(){
-		return manager.createQuery("select c from Categoria c where categoriaPai is null", Categoria.class).getResultList();
+	public Categoria findById(Long id) {
+		return manager.find(Categoria.class, id);
 	}
 	
-	public List<Categoria> subCategorias(Long id){
-		return manager.createQuery("select c from Categoria c where categoriaPai ="+id, Categoria.class).getResultList();
+	public List<Categoria> raizes(){
+		return manager.createQuery("select c from Categoria c where categoriaPai is null", Categoria.class).getResultList();
 	}
 	
 	public List<Categoria> subcategoriasDe(Categoria categoriaPai){
@@ -29,9 +29,4 @@ public class Categorias implements Serializable {
 				.setParameter("raiz", categoriaPai)
 				.getResultList();
 	}
-	
-	public Categoria findById(Long id) {
-		return manager.find(Categoria.class, id);
-	}
-
 }

@@ -19,20 +19,10 @@ public class CadastroProdutoService implements Serializable{
 	public Produto salvar(Produto produto) {
 		Produto produtoExistente = produtos.findBySku(produto.getSku());
 		
-		if (produtoExistente != null) {
+		if (produtoExistente != null && !produtoExistente.equals(produto)) {
 			throw new NegocioException("Já existe um produto com o SKU informado");
 		}
 		
 		return produtos.guardar(produto);
-	}
-	
-	public Produto alterar(Produto produto) {
-		//TODO develop business roles
-		return produto;
-	}
-	
-	public Produto excluir(Produto produto) {
-		//TODO develop business roles
-		return produto;
 	}
 }

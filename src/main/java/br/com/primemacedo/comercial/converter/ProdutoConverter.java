@@ -17,6 +17,7 @@ public class ProdutoConverter implements Converter {
 	private Produtos produtosRepository;
 
 	public ProdutoConverter() {
+		//Injection de Produtos
 		produtosRepository = CDIServiceLocator.getBean(Produtos.class);
 	}
 
@@ -35,8 +36,10 @@ public class ProdutoConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		
 		if (value != null) {
-			return ((Produto) value).getId().toString();
+			Produto produto = (Produto) value;
+			return produto.getId() == null ? null : produto.getId().toString();
 		}
 		return "";
 	}

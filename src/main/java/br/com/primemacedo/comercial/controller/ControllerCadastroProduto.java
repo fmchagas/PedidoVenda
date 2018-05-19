@@ -23,7 +23,7 @@ public class ControllerCadastroProduto implements Serializable {
 
 	@Inject
 	private Categorias categorias;
-	
+
 	@Inject
 	private CadastroProdutoService cadastroProdutoService;
 
@@ -40,7 +40,7 @@ public class ControllerCadastroProduto implements Serializable {
 	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
 			categoriasRaizes = categorias.raizes();
-			
+
 			if (categoriaPai != null) {
 				carregarSubCategorias();
 			}
@@ -48,10 +48,7 @@ public class ControllerCadastroProduto implements Serializable {
 	}
 
 	public void carregarSubCategorias() {
-			if (FacesUtil.isPostBack()) {
-			subCategorias = categorias.subcategoriasDe(categoriaPai);
-		}
-
+		subCategorias = categorias.subcategoriasDe(categoriaPai);
 	}
 
 	public void salvar() {
@@ -66,13 +63,17 @@ public class ControllerCadastroProduto implements Serializable {
 		subCategorias = new ArrayList<>();
 	}
 	
+	public boolean isEditando() {
+		return this.produto.getId() != null;
+	}
+
 	public Produto getProduto() {
 		return produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-		
+
 		if (this.produto != null) {
 			this.categoriaPai = this.produto.getCategoria().getCategoriaPai();
 		}
@@ -81,8 +82,6 @@ public class ControllerCadastroProduto implements Serializable {
 	public List<Categoria> getCategoriasRaizes() {
 		return categoriasRaizes;
 	}
-	
-	
 
 	public void setCategoriasRaizes(List<Categoria> categoriasRaizes) {
 		this.categoriasRaizes = categoriasRaizes;
