@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.controller;
+package br.com.primemacedo.comercial.view;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class ControllerConsultarProdutos implements Serializable {
+public class ConsultarProdutosBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -24,7 +24,7 @@ public class ControllerConsultarProdutos implements Serializable {
 	private List<Produto> produtosFiltrados;
 	private ProdutoFilter filtro;
 
-	public ControllerConsultarProdutos() {
+	public ConsultarProdutosBean() {
 		filtro = new ProdutoFilter();
 	}
 

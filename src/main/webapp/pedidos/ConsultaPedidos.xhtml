@@ -15,7 +15,7 @@
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" action="#{controllerConsultaPedidos.pesquisar}" update="@form" />
+	    			<p:commandButton value="Pesquisar" action="#{consultaPedidosBean.pesquisar}" update="@form" />
 	    		</p:toolbarGroup>
 	    		
 	    		<p:toolbarGroup align="right">
@@ -30,33 +30,33 @@
 	    			columnClasses="rotulo, campo">
 	    		<p:outputLabel value="Número" />
 	    		<h:panelGroup>
-	    			<p:inputText size="10" value="#{controllerConsultaPedidos.filtro.numeroDe}" />
+	    			<p:inputText size="10" value="#{consultaPedidosBean.filtro.numeroDe}" />
 	    			a
-	    			<p:inputText size="10" value="#{controllerConsultaPedidos.filtro.numeroAte}" />
+	    			<p:inputText size="10" value="#{consultaPedidosBean.filtro.numeroAte}" />
 	    		</h:panelGroup>
 	    		
 	    		<p:outputLabel value="Data de criação" />
 	    		<h:panelGroup>
 	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				value="#{controllerConsultaPedidos.filtro.dataCriacaoDe}" />
+	    				value="#{consultaPedidosBean.filtro.dataCriacaoDe}" />
 	    			a
 	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				value="#{controllerConsultaPedidos.filtro.dataCriacaoAte}" />
+	    				value="#{consultaPedidosBean.filtro.dataCriacaoAte}" />
 	    		</h:panelGroup>
 	    		
 	    		<p:outputLabel value="Vendedor" />
-	    		<p:inputText size="40" value="#{controllerConsultaPedidos.filtro.nomeVendedor}" />
+	    		<p:inputText size="40" value="#{consultaPedidosBean.filtro.nomeVendedor}" />
 	    		
 	    		<p:outputLabel value="Cliente" />
-	    		<p:inputText size="40" value="#{controllerConsultaPedidos.filtro.nomeCliente}" />
+	    		<p:inputText size="40" value="#{consultaPedidosBean.filtro.nomeCliente}" />
 	    		
 				<p:outputLabel value="Status" />
-	    		<p:selectManyCheckbox value="#{controllerConsultaPedidos.filtro.statsuses}">
-	    			<f:selectItems value="#{controllerConsultaPedidos.statues}" var="status" itemLabel="#{status.descricao}" itemValue="#{staues}" />
+	    		<p:selectManyCheckbox value="#{consultaPedidosBean.filtro.statsuses}">
+	    			<f:selectItems value="#{consultaPedidosBean.statues}" var="status" itemLabel="#{status.descricao}" itemValue="#{staues}" />
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
-			<p:dataTable id="pedidosTable" value="#{controllerConsultaPedidos.pedidosFiltrados}" var="pedido"
+			<p:dataTable id="pedidosTable" value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido"
 	    		style="margin-top: 20px" emptyMessage="Nenhum pedido encontrado."
 	    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 	    		
@@ -85,7 +85,9 @@
 	    		</p:column>
 	    		
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Editar"/>
+	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/pedidos/CadastroPedido">
+	    			<f:param name="pedido" value="#{pedido.id}" />
+	    			</p:button>
 	    		</p:column>
 	    	</p:dataTable>
 	    	

@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.controller;
+package br.com.primemacedo.comercial.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class ControllerCadastroProduto implements Serializable {
+public class CadastroProdutoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,11 +33,11 @@ public class ControllerCadastroProduto implements Serializable {
 	private List<Categoria> categoriasRaizes;
 	private List<Categoria> subCategorias;
 
-	public ControllerCadastroProduto() {
+	public CadastroProdutoBean() {
 		limpar();
 	}
 
-	public void inicializar() {
+	public void inicializar() {	
 		if (FacesUtil.isNotPostBack()) {
 			categoriasRaizes = categorias.raizes();
 

@@ -17,7 +17,7 @@
 			<p:toolbar style="margin-top:20px">
 				<p:toolbarGroup>
 					<p:commandButton value="Pesquisar"
-						action="#{controllerConsultarProdutos.pesquisar}" update="@form" />
+						action="#{consultarProdutosBean.pesquisar}" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Novo" outcome="/produtos/CadastroProduto" />
@@ -28,15 +28,15 @@
 				style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
 				<p:outputLabel value="SKU" for="sku" />
 				<p:inputText id="sku" size="20" maxlength="20"
-					value="#{controllerConsultarProdutos.filtro.sku}" />
+					value="#{consultarProdutosBean.filtro.sku}" />
 
 				<p:outputLabel value="Nome" for="nome" />
 				<p:inputText id="nome" size="60" maxlength="80"
-					value="#{controllerConsultarProdutos.filtro.nome}" />
+					value="#{consultarProdutosBean.filtro.nome}" />
 			</p:panelGrid>
 
 			<p:dataTable id="produtosTable"
-				value="#{controllerConsultarProdutos.produtosFiltrados}"
+				value="#{consultarProdutosBean.produtosFiltrados}"
 				var="produto" emptyMessage="Nenhum registro encontrado." rows="20"
 				paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom" style="margin-top:20px">
@@ -74,14 +74,14 @@
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						oncomplete="PF('confirmacaoExclusao').show();"
 						process="@this" update=":frmPersquisa:confirmacaoExclusaoDialog">
-						<f:setPropertyActionListener value="#{produto}" target="#{controllerConsultarProdutos.produtoSelecionado}" />	
+						<f:setPropertyActionListener value="#{produto}" target="#{consultarProdutosBean.produtoSelecionado}" />	
 					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
 
 			<p:confirmDialog id="confirmacaoExclusaoDialog" header="Exclusão de produto"
-				message="Tem certeza que deseja excluir o produto #{controllerConsultarProdutos.produtoSelecionado.sku}?"
+				message="Tem certeza que deseja excluir o produto #{consultarProdutosBean.produtoSelecionado.sku}?"
 				widgetVar="confirmacaoExclusao" showEffect="fade" hideEffect="fade">
 				<p:button value="Não"
 					onclick="PF('confirmacaoExclusao').hide(); return false;"
@@ -90,7 +90,7 @@
 				<p:commandButton value="Sim"
 					oncomplete="PF('confirmacaoExclusao').hide();"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-					action="#{controllerConsultarProdutos.excluir}" process="@this" update=":frmPersquisa:produtosTable" />
+					action="#{consultarProdutosBean.excluir}" process="@this" update=":frmPersquisa:produtosTable" />
 			</p:confirmDialog>
 
 		</h:form>

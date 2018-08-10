@@ -25,7 +25,7 @@ public class Pedidos implements Serializable {
 	private EntityManager manager;
 
 	@Transactional
-	private Pedido guardar(Pedido pedido) {
+	public Pedido guardar(Pedido pedido) {
 		return manager.merge(pedido);
 	}
 

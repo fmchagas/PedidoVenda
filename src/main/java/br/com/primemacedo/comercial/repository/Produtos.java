@@ -66,9 +66,15 @@ public class Produtos implements Serializable {
 		try {
 			produto = findById(produto.getId());
 			manager.remove(produto);
-			manager.flush();
-		} catch (PersistenceException e) {
+			manager.flush();//tudo marcado para exclusão serão excluidos
+		} catch (PersistenceException e) {//caso item de pedito estiver referenciando lança exception
 			throw new NegocioException("Produto não pode ser excluido.");
 		}
+	}
+
+	public List<Produto> findByName(String nome) {
+		return manager.createQuery("from Produto where upper(nome) like :nome",Produto.class)
+				.setParameter("nome", nome.toUpperCase()+"%")
+				.getResultList();
 	}
 }

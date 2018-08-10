@@ -107,3 +107,6 @@ h1 {
 .ui-state-disabled {
 	opacity: .80 !important;
 }
+.ui-datatable table{
+	    table-layout: auto !important;
+}

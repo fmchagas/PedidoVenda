@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.controller;
+package br.com.primemacedo.comercial.view;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import br.com.primemacedo.comercial.repository.filter.PedidoFilter;
 
 @Named
 @ViewScoped
-public class ControllerConsultaPedidos implements Serializable {
+public class ConsultaPedidosBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class ControllerConsultaPedidos implements Serializable {
 	private List<Pedido> pedidosFiltrados;
 	private PedidoFilter filtro;
 
-	public ControllerConsultaPedidos() {
+	public ConsultaPedidosBean() {
 		filtro = new PedidoFilter();
 	}
 
