@@ -18,15 +18,15 @@
 			value="#{cadastroPedidoBean.pedido.status.descricao}" />
 
 		<p:outputLabel value="Vendedor" for="vendedor" />
-		<p:selectOneMenu id="vendedor"
-			value="#{cadastroPedidoBean.pedido.vendedor}">
+		<p:selectOneMenu id="vendedor" value="#{cadastroPedidoBean.pedido.vendedor}"
+				disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 			<f:selectItem itemLabel="Selecione" />
 			<f:selectItems value="#{cadastroPedidoBean.vendedores}"
 				var="vendedor" itemLabel="#{vendedor.nome}" itemValue="#{vendedor}" />
 		</p:selectOneMenu>
 
 		<p:outputLabel value="cliente" for="cliente" />
-		<p:autoComplete id="cliente"
+		<p:autoComplete id="cliente" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"
 			value="#{cadastroPedidoBean.pedido.cliente}"
 			completeMethod="#{cadastroPedidoBean.carregarCliente}"
 			var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}"
@@ -36,7 +36,8 @@
 
 		<p:outputLabel value="Forma de pagamento" for="formaPagamento" />
 		<p:selectOneMenu id="formaPagamento"
-			value="#{cadastroPedidoBean.pedido.formaPagamento}">
+			value="#{cadastroPedidoBean.pedido.formaPagamento}"
+			disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 			<f:selectItem itemLabel="Selecione" />
 			<f:selectItems value="#{cadastroPedidoBean.formasPagamento}"
 				var="formaPagamento" itemValue="#{formaPagamento}"
@@ -45,7 +46,9 @@
 
 		<p:outputLabel value="Valor do frete" for="valorFrete" />
 		<p:inputNumber id="valorFrete" size="10" maxlength="10"
-			value="#{cadastroPedidoBean.pedido.valorFrete}">
+			value="#{cadastroPedidoBean.pedido.valorFrete}"
+			disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
+			
 			<p:ajax event="change" process="@this" update="totalPedido"
 			listener="#{cadastroPedidoBean.recalcularPedido}"/>
 		</p:inputNumber>
@@ -58,7 +61,9 @@
 
 		<p:outputLabel value="Valor de desconto" for="valorDesconto" />
 		<p:inputNumber id="valorDesconto" size="10" maxlength="10"
-			value="#{cadastroPedidoBean.pedido.valorDesconto}">
+			value="#{cadastroPedidoBean.pedido.valorDesconto}"
+			disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
+			
 			<p:ajax event="change" process="@this" update="totalPedido"
 			listener="#{cadastroPedidoBean.recalcularPedido}"/>
 		</p:inputNumber>

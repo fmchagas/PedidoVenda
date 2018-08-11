@@ -27,7 +27,6 @@ public class Produtos implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	@Transactional
 	public Produto guardar(Produto produto) {
 		return manager.merge(produto);
 	}

@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.primemacedo.comercial.model.Usuario;
-import br.com.primemacedo.comercial.util.jpa.Transactional;
 
 public class Usuarios implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -15,7 +14,6 @@ public class Usuarios implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	@Transactional
 	public Usuario guardar(Usuario usuario) {
 		return manager.merge(usuario);
 	}

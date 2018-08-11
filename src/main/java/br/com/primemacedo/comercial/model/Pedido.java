@@ -2,8 +2,8 @@ package br.com.primemacedo.comercial.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -203,7 +203,43 @@ public class Pedido implements Serializable {
 	public boolean isEmitido() {
 		return StatusPedido.EMITIDO.equals(this.getStatus());
 	}
+	
+	@Transient
+	public boolean isEmissivel() {
+		return this.isExistente() && this.isOrcamento();
+	}
+	
+	@Transient
+	public boolean isNaoEmissivel() {
+		return !this.isEmissivel();
+	}
+	
+	@Transient
+	public boolean isCancelavel() {
+		return this.isExistente() && !this.isCancelado();
+	}
 
+	@Transient
+	public boolean isNaoCancelavel() {
+		return !isCancelavel();
+	}
+	
+	@Transient
+	private boolean isCancelado() {
+		return StatusPedido.CANCELADO.equals(this.getStatus());
+	}
+	
+	@Transient
+	public boolean isAlteravel() {
+		return this.isOrcamento();
+	}
+	
+	@Transient
+	public boolean isNaoAlteravel() {
+		return !isAlteravel();
+	}
+	
+	
 	@Transient
 	public BigDecimal getValorSubtotal() {
 		return this.getValorTotal().subtract(this.getValorFrete()).add(this.getValorDesconto());
@@ -242,6 +278,7 @@ public class Pedido implements Serializable {
 			this.getItens().remove(primeiroItem);
 		}
 	}
+	
 
 
 	@Override

@@ -28,7 +28,7 @@ public class PedidoConverter implements Converter {
 		if (value != null) {
 			Long id = new Long(value);
 
-			retorno = pedidosRepository.findById(id);
+			retorno = pedidosRepository.porId(id);
 		}
 
 		return retorno;

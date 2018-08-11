@@ -5,14 +5,16 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:o="http://omnifaces.org/ui"
 	template="/WEB-INF/template/Layout.xhtml">
-
+	
+	<f:metadata>
+		<o:viewParam name="produto" value="#{cadastroProdutoBean.produto}" />
+		<f:event listener="#{cadastroProdutoBean.inicializar}" type="preRenderView"/>
+	</f:metadata>
+	
 	<ui:define name="titulo">#{cadastroProdutoBean.editando ? 'Editando Produto' : 'Novo Produto'}</ui:define>
 
 	<ui:define name="corpo">
-		<f:metadata>
-			<o:viewParam name="produto" value="#{cadastroProdutoBean.produto}" />
-			<f:event listener="#{cadastroProdutoBean.inicializar}" type="preRenderView"/>
-		</f:metadata>
+		
 		<h1>#{cadastroProdutoBean.editando ? 'Edição de Produto' : 'Novo Produto'}</h1>
 
 		<h:form>

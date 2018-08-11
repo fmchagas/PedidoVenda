@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.view;
+package br.com.primemacedo.comercial.view.produtos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,8 +37,9 @@ public class CadastroProdutoBean implements Serializable {
 		limpar();
 	}
 
-	public void inicializar() {	
+	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
+
 			categoriasRaizes = categorias.raizes();
 
 			if (categoriaPai != null) {
@@ -52,8 +53,13 @@ public class CadastroProdutoBean implements Serializable {
 	}
 
 	public void salvar() {
-		produto = cadastroProdutoService.salvar(produto);
-		limpar();
+		if (isEditando()) {
+			produto = cadastroProdutoService.salvar(produto);
+		} else {
+			produto = cadastroProdutoService.salvar(produto);
+			limpar();
+		}
+
 		FacesUtil.addInfoMessage("Registro salvo com sucesso.");
 	}
 
@@ -62,7 +68,7 @@ public class CadastroProdutoBean implements Serializable {
 		categoriaPai = null;
 		subCategorias = new ArrayList<>();
 	}
-	
+
 	public boolean isEditando() {
 		return this.produto.getId() != null;
 	}

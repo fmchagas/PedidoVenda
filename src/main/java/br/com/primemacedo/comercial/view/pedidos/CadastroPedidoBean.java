@@ -1,8 +1,10 @@
-package br.com.primemacedo.comercial.view;
+package br.com.primemacedo.comercial.view.pedidos;
 
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,7 +40,10 @@ public class CadastroPedidoBean implements Serializable {
 	@Inject
 	private CadastroPedidoService cadastroPedidoService;
 
+	@Produces
+	@PedidoEdicao
 	private Pedido pedido;
+	
 	private List<Usuario> vendedores;
 
 	private Produto produtoLinhaEditavel;
@@ -143,6 +148,12 @@ public class CadastroPedidoBean implements Serializable {
 
 		this.pedido.reccalcularValorTotal();
 	}
+	
+	
+	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
+		this.pedido = event.getPedido();
+	}
+	
 	
 	public FormaPagamento[] getFormasPagamento() {
 		return FormaPagamento.values();

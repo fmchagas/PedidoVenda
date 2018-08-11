@@ -15,7 +15,6 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.primemacedo.comercial.model.Pedido;
 import br.com.primemacedo.comercial.repository.filter.PedidoFilter;
-import br.com.primemacedo.comercial.util.jpa.Transactional;
 
 public class Pedidos implements Serializable {
 
@@ -24,12 +23,12 @@ public class Pedidos implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	@Transactional
+
 	public Pedido guardar(Pedido pedido) {
 		return manager.merge(pedido);
 	}
 
-	public Pedido findById(Long id) {
+	public Pedido porId(Long id) {
 		return manager.find(Pedido.class, id);
 	}
 

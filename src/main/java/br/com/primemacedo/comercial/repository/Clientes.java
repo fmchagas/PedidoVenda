@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.primemacedo.comercial.model.Cliente;
-import br.com.primemacedo.comercial.util.jpa.Transactional;
 
 public class Clientes implements Serializable {
 
@@ -16,7 +15,6 @@ public class Clientes implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	@Transactional
 	private Cliente guardar(Cliente cliente) {
 		return manager.merge(cliente);
 	}

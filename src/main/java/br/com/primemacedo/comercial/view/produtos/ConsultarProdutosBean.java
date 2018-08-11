@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.view;
+package br.com.primemacedo.comercial.view.produtos;
 
 import java.io.Serializable;
 import java.util.List;
