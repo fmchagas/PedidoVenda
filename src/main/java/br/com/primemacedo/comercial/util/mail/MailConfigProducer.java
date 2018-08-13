@@ -1,17 +1,8 @@
 package br.com.primemacedo.comercial.util.mail;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-
-import com.outjected.email.api.SessionConfig;
-import com.outjected.email.impl.SimpleMailConfig;
-
 public class MailConfigProducer {
 	
-	@Produces @ApplicationScoped
+	/*@Produces @ApplicationScoped
 	public SessionConfig getMailConfig() throws IOException {
 		Properties props = new Properties();
 		props.load(getClass().getResourceAsStream("/mail.properties"));
@@ -26,5 +17,5 @@ public class MailConfigProducer {
 		config.setPassword(props.getProperty("mail.password"));
 		
 		return config;
-	}
+	}*/
 }

@@ -1,24 +1,10 @@
 package br.com.primemacedo.comercial.view.pedidos;
 
 import java.io.Serializable;
-import java.util.Locale;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.apache.jasper.tagplugins.jstl.core.If;
-import org.apache.velocity.tools.generic.NumberTool;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import com.outjected.email.api.ContentDisposition;
-import com.outjected.email.api.EmailMessage;
-import com.outjected.email.api.MailMessage;
-import com.outjected.email.api.MessagePriority;
-import com.outjected.email.impl.attachments.URLAttachment;
-import com.outjected.email.impl.templating.velocity.VelocityTemplate;
-import com.outjected.email.impl.util.EmailAttachmentUtil;
 
 import br.com.primemacedo.comercial.model.Pedido;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
@@ -37,53 +23,53 @@ public class EnvioPedidoEmailBean implements Serializable {
 	
 	
 	public void enviarPedido() {
-		MailMessage message = mailer.novaMensagem();
+		/*MailMessage message = mailer.novaMensagem();
 		
 		message.to(this.pedido.getCliente().getEmail())
 		.subject("Pedido "+ this.pedido.getId())
-		/*.bodyHtml("Este email foi enviado de forma automatica não responder.</br>"
+		.bodyHtml("Este email foi enviado de forma automatica não responder.</br>"
 				+"Itens do Pedido </br> "
-				+ pedido.getItens().get(0).getProduto().getNome())*/
+				+ pedido.getItens().get(0).getProduto().getNome())
 		.bodyHtml(this.montabodyHtml())
-		.send();
+		.send();*/
 		
 		FacesUtil.addInfoMessage("Pedido enviado por e-mail com sucesso!");
 	}
 	
-	public void enviarPedidoComTemplate() {
+	/*public void enviarPedidoComTemplate() {
 		MailMessage message = mailer.novaMensagem();
 		EmailMessage emailMessage;
 		
 		message.to(this.pedido.getCliente().getEmail())
 		.subject("Pedido "+ this.pedido.getId())
 
-       /*emailMessage = new MailMessageImpl(mailConfig)
+       emailMessage = new MailMessageImpl(mailConfig)
         		.from(MailTestUtil.getAddressHeader(fromName, fromAddress))
         		.replyTo(MailTestUtil.getAddressHeader(replyToName, replyToAddress))
         		.to(person)
-                .subject(subject)*/
+                .subject(subject)
                 
-                /*.bodyHtml(new VelocityTemplate(
+                .bodyHtml(new VelocityTemplate(
                 		Resources.asCharSource(Resources.getResource("/emails/pedido.template"), Charsets.UTF_8)
-                		.read()))*/
+                		.read()))
                 .bodyHtml(new VelocityTemplate(Resources.getResource("/emails/pedido.template").getFile()))
                 
                 .put("pedido", this.pedido)
                 .put("numberTool", new NumberTool())
                 .put("locale",new Locale("pt", "BR"))
-              /*  .importance(MessagePriority.HIGH)
+                .importance(MessagePriority.HIGH)
                 .addAttachment(new URLAttachment("http://design.jboss.org/seam/logo/final/seam_mail_85px.png", "seamLogo.png",
-                                ContentDisposition.INLINE))*/
+                                ContentDisposition.INLINE))
                 .send();
 		
 		
-		/*.bodyHtml(new VelocityTemplate("D:/Documentos/workspace/PedidoVenda/src/main/resources/emails/pedido.template"))
+		.bodyHtml(new VelocityTemplate("D:/Documentos/workspace/PedidoVenda/src/main/resources/emails/pedido.template"))
 		.put("pedido",this.pedido)
 		.put("numberTool",new NumberTool())
-		.put("locale",new Locale("pt", "BR"))*/
+		.put("locale",new Locale("pt", "BR"))
 		
 		FacesUtil.addInfoMessage("Pedido enviado por e-mail com sucesso!");
-	}
+	}*/
 	
 	private String montabodyHtml() {
 		StringBuilder sb = new StringBuilder();

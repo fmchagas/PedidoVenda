@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
 			<artifactId>weld-servlet</artifactId>
-			<version>1.1.10.Final</version>
+			<version>1.1.10.Final</version><!-- 1.1.10.Final -->
 		</dependency>
 
 		<!-- Log4J -->
@@ -122,12 +122,12 @@
 		</dependency>
 
 		<!-- Abstração para envio de e-mails -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.outjected</groupId>
 			<artifactId>simple-email</artifactId>
 			<version>0.2.6-SNAPSHOT</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> -->
 
 		<!-- Requerido para envio de e-mails -->
 		<dependency>

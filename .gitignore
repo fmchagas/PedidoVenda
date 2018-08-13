@@ -9,3 +9,6 @@
 .project
 
 .tern-project
+
+/src/main/webapp/META-INF/persistence.xml
+/bin/
