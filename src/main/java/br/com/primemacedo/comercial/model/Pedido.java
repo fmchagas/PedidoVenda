@@ -239,6 +239,11 @@ public class Pedido implements Serializable {
 		return !isAlteravel();
 	}
 	
+	@Transient
+	public boolean isNaoEnviavelPorEmail() {
+		return this.isNovo() || this.isCancelado();
+	}
+	
 	
 	@Transient
 	public BigDecimal getValorSubtotal() {
