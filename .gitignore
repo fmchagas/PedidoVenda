@@ -1,14 +1,17 @@
 .settings
 
+
 /target/
+
 
 /src/test
 
+
 .classpath
+
 
 .project
 
+
 .tern-project
 
-/src/main/webapp/META-INF/persistence.xml
-/bin/
