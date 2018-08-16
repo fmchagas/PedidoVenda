@@ -1,4 +1,4 @@
-package br.com.primemacedo.comercial.view.clientes;
+package br.com.primemacedo.comercial.view.pedidos;
 
 import java.io.Serializable;
 import java.util.HashMap;

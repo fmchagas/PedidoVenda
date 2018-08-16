@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.event.SelectEvent;
 
 import br.com.primemacedo.comercial.model.Cliente;
 import br.com.primemacedo.comercial.model.EnderecoEntrega;
@@ -81,6 +82,10 @@ public class CadastroPedidoBean implements Serializable {
 			System.out.println(":::: Adiciona Item Vazio.");
 		}
 		
+	}
+	
+	public void clienteSelecionado(SelectEvent event) {
+		pedido.setCliente((Cliente)event.getObject());
 	}
 
 	public List<Produto> completarProdroduto(String nome) {

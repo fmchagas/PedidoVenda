@@ -34,7 +34,10 @@
 			forceSelection="true" dropdown="true" size="40" />
 			
 			<p:commandButton icon="ui-icon-search" title="Pesquisar" process="@this" update="@none" 
-				disabled="#{cadastroPedidoBean.pedido.naoAlteravel}" action="#{selecaoClienteBean.abrirDialogo}" ignoreAutoUpdate="true"/>
+				disabled="#{cadastroPedidoBean.pedido.naoAlteravel}" action="#{selecaoClienteBean.abrirDialogo}" ignoreAutoUpdate="true">
+			
+				<p:ajax event="dialogReturn" listener="#{cadastroPedidoBean.clienteSelecionado}" update="cliente" ignoreAutoUpdate="true" />	
+			</p:commandButton>
 		</h:panelGroup>
 
 
