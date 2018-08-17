@@ -61,7 +61,7 @@ public class Produtos implements Serializable {
 	}
 
 	@Transactional
-	public void remover(Produto produto) {
+	public void remover(Produto produto) throws NegocioException {
 		try {
 			produto = findById(produto.getId());
 			manager.remove(produto);

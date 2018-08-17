@@ -17,7 +17,7 @@ public class EstoqueService implements Serializable {
 	Pedidos pedidos;
 
 	@Transactional
-	public void baixarItensEstoque(Pedido pedido) {
+	public void baixarItensEstoque(Pedido pedido) throws NegocioException {
 		pedido = this.pedidos.porId(pedido.getId());
 
 		for (ItemPedido item : pedido.getItens()) {

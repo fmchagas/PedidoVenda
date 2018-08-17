@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.Produtos;
 import br.com.primemacedo.comercial.repository.filter.ProdutoFilter;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
@@ -33,13 +34,19 @@ public class ConsultarProdutosBean implements Serializable {
 	}
 
 	public void excluir() {
-		produtos.remover(produtoSelecionado);
-		produtosFiltrados.remove(produtoSelecionado);
+		try {
+			produtos.remover(produtoSelecionado);
+			produtosFiltrados.remove(produtoSelecionado);
 
-		StringBuilder sb = new StringBuilder().append("Produto ").append(produtoSelecionado.getSku())
-				.append(" Excluido com sucesso.");
+			StringBuilder sb = new StringBuilder().append("Produto ").append(produtoSelecionado.getSku())
+					.append(" Excluido com sucesso.");
 
-		FacesUtil.addInfoMessage(sb.toString());
+			FacesUtil.addInfoMessage(sb.toString());
+			
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}
+		
 	}
 
 	public List<Produto> getProdutosFiltrados() {

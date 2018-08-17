@@ -56,8 +56,8 @@
 			<artifactId>weld-servlet</artifactId>
 			<version>2.2.9.Final</version><!-- 1.1.10.Final -->
 		</dependency>
-	
-	<!-- Weld depende do jandex -->
+
+		<!-- Weld depende do jandex -->
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jandex</artifactId>
@@ -148,11 +148,19 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- Usamos para formatar números em templates -->
+		<!-- Usamos para formatar números em templates do velocity -->
 		<dependency>
 			<groupId>velocity-tools</groupId>
 			<artifactId>velocity-tools-generic</artifactId>
 			<version>1.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Usado para geração de arquivos Excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
 			<scope>compile</scope>
 		</dependency>
 

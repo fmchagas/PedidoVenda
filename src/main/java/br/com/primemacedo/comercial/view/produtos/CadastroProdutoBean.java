@@ -13,6 +13,7 @@ import br.com.primemacedo.comercial.model.Categoria;
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.Categorias;
 import br.com.primemacedo.comercial.service.CadastroProdutoService;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
@@ -53,14 +54,19 @@ public class CadastroProdutoBean implements Serializable {
 	}
 
 	public void salvar() {
-		if (isEditando()) {
-			produto = cadastroProdutoService.salvar(produto);
-		} else {
-			produto = cadastroProdutoService.salvar(produto);
-			limpar();
-		}
 
-		FacesUtil.addInfoMessage("Registro salvo com sucesso.");
+		try {
+			if (isEditando()) {
+				produto = cadastroProdutoService.salvar(produto);
+			} else {
+				produto = cadastroProdutoService.salvar(produto);
+				limpar();
+			}
+
+			FacesUtil.addInfoMessage("Registro salvo com sucesso.");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}
 	}
 
 	private void limpar() {

@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.com.primemacedo.comercial.model.Pedido;
 import br.com.primemacedo.comercial.service.EmissaoPedidoService;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
@@ -38,7 +39,9 @@ public class EmissaoPedidoBean implements Serializable{
 			this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
 			
 			FacesUtil.addInfoMessage("Pedido emitido com sucesso!");
-		} finally {
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}finally {
 			this.pedido.adicionarItemVazio();
 		}
 	}

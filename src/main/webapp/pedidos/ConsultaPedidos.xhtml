@@ -19,7 +19,8 @@
 	    		</p:toolbarGroup>
 	    		
 	    		<p:toolbarGroup align="right">
-					<p:commandButton value="Exportar para XLS" ajax="false">
+					<p:commandButton value="Exportar para XLS" ajax="false" disabled="#{empty consultaPedidosBean.pedidosFiltrados}">
+						<p:dataExporter type="xls" target="pedidosTable" fileName="pedidos"/>
 					</p:commandButton>
 					
 	    			<p:button value="Novo" outcome="/pedidos/CadastroPedido" />
@@ -84,7 +85,7 @@
 	    			<h:outputText value="#{pedido.status.descricao}"/>
 	    		</p:column>
 	    		
-	    		<p:column style="text-align: center; width: 50px">
+	    		<p:column style="text-align: center; width: 50px" exportable="false">
 	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/pedidos/CadastroPedido">
 	    			<f:param name="pedido" value="#{pedido.id}" />
 	    			</p:button>

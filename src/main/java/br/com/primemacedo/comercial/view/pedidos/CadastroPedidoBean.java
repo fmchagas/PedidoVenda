@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.primefaces.event.SelectEvent;
 
 import br.com.primemacedo.comercial.model.Cliente;
@@ -23,6 +25,7 @@ import br.com.primemacedo.comercial.repository.Clientes;
 import br.com.primemacedo.comercial.repository.Produtos;
 import br.com.primemacedo.comercial.repository.Usuarios;
 import br.com.primemacedo.comercial.service.CadastroPedidoService;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 import br.com.primemacedo.comercial.validation.SKU;
 
@@ -61,7 +64,6 @@ public class CadastroPedidoBean implements Serializable {
 			this.pedido.adicionarItemVazio();
 
 			this.recalcularPedido();
-			System.out.println(":::: isNotPostBack()");
 		}
 	}
 
@@ -73,10 +75,12 @@ public class CadastroPedidoBean implements Serializable {
 	public void salvar() {
 		//Remove primeiro item da lista que sempre está vazio para depois salvar, caso tente salvar com o item vazio na lista uma nullPointerExeption será lançada
 		this.pedido.removerItemVazio();
-		
+
 		try {
 			this.pedido = this.cadastroPedidoService.salvar(this.pedido);
 			FacesUtil.addInfoMessage("Pedido salvo com sucesso.");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
 		}finally {
 			this.pedido.adicionarItemVazio();
 			System.out.println(":::: Adiciona Item Vazio.");
@@ -200,5 +204,19 @@ public class CadastroPedidoBean implements Serializable {
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-
+	
+	public boolean isRenderResponse() {
+		return FacesContext.getCurrentInstance().getCurrentPhaseId().getName().equals("RENDER_RESPONSE");
+	}
+	
+	//hack para validar nome cliente mesmo campo sendo readonly
+	@NotBlank
+	public String getNomeCliente() {
+		return pedido.getCliente() == null ? null : pedido.getCliente().getNome();
+	}
+	//hack para evitar erro ao clicar no botão salvar.
+	//deve ser utilizado porque o campo nome cliente é readonly=true na fase de RENDER_RESPONSE, mas e readonly=false na fase de VALIDATION
+	public void setNomeCliente(String nome) {
+		
+	}
 }

@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.com.primemacedo.comercial.model.Cliente;
 import br.com.primemacedo.comercial.repository.Clientes;
 import br.com.primemacedo.comercial.service.NegocioException;
+import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 
 
@@ -31,7 +32,11 @@ public class ConsultarClientes implements Serializable{
 	}
 	
 	public void excluir() {
-		throw new NegocioException("Funcionalidade não implementada.");
+		try {
+			throw new NegocioException("Funcionalidade não implementada.");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}
 	}
 
 	public List<Cliente> getListaClientes() {

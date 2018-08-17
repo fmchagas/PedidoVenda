@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.com.primemacedo.comercial.model.Pedido;
 import br.com.primemacedo.comercial.service.CancelamentoPedidoService;
+import br.com.primemacedo.comercial.service.NegocioException;
 import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 
 @Named
@@ -16,23 +17,24 @@ import br.com.primemacedo.comercial.util.jsf.FacesUtil;
 public class CancelamentoPedidoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private @Inject CancelamentoPedidoService cancelamentoPedidoService;
-	
+
 	private @Inject Event<PedidoAlteradoEvent> pedidoAlteradoEvent;
-	
+
 	@Inject
 	@PedidoEdicao
 	private Pedido pedido;
-	
-	
-	public void cancelarPedido() {
-		this.pedido = this.cancelamentoPedidoService.cancelar(this.pedido);
-		this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
-		
-		
-		FacesUtil.addInfoMessage("Pedido alterado com sucesso.");
-	}
 
+	public void cancelarPedido() {
+		try {
+			this.pedido = this.cancelamentoPedidoService.cancelar(this.pedido);
+			this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
+
+			FacesUtil.addInfoMessage("Pedido alterado com sucesso.");
+		} catch (NegocioException ne) {
+			FacesUtil.addErrorMessage(ne.getMessage());
+		}
+	}
 
 }
