@@ -15,11 +15,11 @@
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" action="#{consultaPedidosBean.pesquisar}" update="@form" />
+	    			<p:commandButton value="Pesquisar"  update="@form" />
 	    		</p:toolbarGroup>
 	    		
 	    		<p:toolbarGroup align="right">
-					<p:commandButton value="Exportar para XLS" ajax="false" disabled="#{empty consultaPedidosBean.pedidosFiltrados}">
+					<p:commandButton value="Exportar para XLS" ajax="false" disabled="#{empty consultaPedidosBean.model}">
 						<p:dataExporter type="xls" target="pedidosTable" fileName="pedidos"/>
 					</p:commandButton>
 					
@@ -57,15 +57,15 @@
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
-			<p:dataTable id="pedidosTable" value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido"
+			<p:dataTable id="pedidosTable" value="#{consultaPedidosBean.model}" lazy="true" var="pedido"
 	    		style="margin-top: 20px" emptyMessage="Nenhum pedido encontrado."
-	    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	    		rows="15" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 	    		
-	    		<p:column headerText="Número" style="text-align: center; width: 60px">
+	    		<p:column headerText="Número" style="text-align: center; width: 60px" sortBy="#{pedido.id}">
 	    			<h:outputText value="#{pedido.id}"/>
 	    		</p:column>
 	    		
-	    		<p:column headerText="Cliente">
+	    		<p:column headerText="Cliente" sortBy="#{pedido.cliente.nome}">
 	    			<h:outputText value="#{pedido.cliente.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Vendedor">
@@ -76,7 +76,7 @@
 	    				<f:convertDateTime locale="pt_BR"/>
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Valor total" style="text-align: right; width: 120px">
+	    		<p:column headerText="Valor total" style="text-align: right; width: 120px" sortBy="#{pedido.valorTotal}">
 	    			<h:outputText value="#{pedido.valorTotal}">
 	    				<f:convertNumber type="currency"/>
 	    			</h:outputText>

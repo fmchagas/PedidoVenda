@@ -11,6 +11,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.primemacedo.comercial.model.Pedido;
@@ -31,12 +33,12 @@ public class Pedidos implements Serializable {
 	public Pedido porId(Long id) {
 		return manager.find(Pedido.class, id);
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<Pedido> filtrados(PedidoFilter filtro) {
+	
+	private Criteria criarCriteriaParaFiltro(PedidoFilter filtro) {
 		Session session = manager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Pedido.class).createAlias("cliente", "c").createAlias("vendedor",
-				"v");
+		Criteria criteria = session.createCriteria(Pedido.class)
+				.createAlias("cliente", "cliente")
+				.createAlias("vendedor","v");
 
 		if (filtro.getNumeroDe() != null) {
 			criteria.add(Restrictions.ge("id", filtro.getNumeroDe()));
@@ -65,8 +67,31 @@ public class Pedidos implements Serializable {
 		if (filtro.getStatsuses() != null && filtro.getStatsuses().length > 0) {
 			criteria.add(Restrictions.in("status", filtro.getStatsuses()));
 		}
-
-		return criteria.addOrder(Order.asc("id")).list();
+		
+		return criteria;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Pedido> filtrados(PedidoFilter filtro) {
+		Criteria criteria =criarCriteriaParaFiltro(filtro);
+
+		criteria.setFirstResult(filtro.getPrimeiroRegistro());
+		criteria.setMaxResults(filtro.getQuantidadeRegistro());
+		
+		if (filtro.isAscendente() && filtro.getPropriedadeOrdenacao() != null) {
+			criteria.addOrder(Order.asc(filtro.getPropriedadeOrdenacao()));
+		}else if(filtro.getPropriedadeOrdenacao() != null) {
+			criteria.addOrder(Order.desc(filtro.getPropriedadeOrdenacao()));
+		}
+		
+		return criteria.list();
+	}
+	
+	public int quantidadeFiltrados(PedidoFilter filtro) {
+		Criteria criteria = criarCriteriaParaFiltro(filtro);
+		
+		criteria.setProjection(Projections.rowCount());
+		
+		return ((Number) criteria.uniqueResult()).intValue();
+	}
 }
