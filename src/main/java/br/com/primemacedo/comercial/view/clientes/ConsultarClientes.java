@@ -33,7 +33,12 @@ public class ConsultarClientes implements Serializable{
 	
 	public void excluir() {
 		try {
-			throw new NegocioException("Funcionalidade não implementada.");
+			repoClientes.remover(clienteSelecionado);
+			
+			FacesUtil.addInfoMessage("Cliente removido com sucesso.");
+			
+			pesquisar();
+			
 		} catch (NegocioException ne) {
 			FacesUtil.addErrorMessage(ne.getMessage());
 		}

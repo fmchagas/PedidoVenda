@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="cliente" value="#{cadastroClientesBean.cliente}" />
+		<f:viewAction action="#{cadastroClientesBean.inicializar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">#{cadastroClientesBean.editando ? 'Editando Cliente' : 'Novo Cliente'}</ui:define>
+
+	<ui:define name="corpo">
+
+		<h1>#{cadastroClientesBean.editando ? 'Editando Cliente' : 'Novo
+			Cliente'}</h1>
+
+		<h:form>
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="/clientes/CadastroClientes" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						action="#{cadastroClientesBean.salvar}" update="@form" ajax="true" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisar" outcome="/clientes/ConsultarClientes" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
+
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="60" maxlength="80"
+					value="#{cadastroClientesBean.cliente.nome}" />
+
+				<p:outputLabel value="E-mail" for="email" />
+				<p:inputText id="email" size="60" maxlength="80"
+					value="#{cadastroClientesBean.cliente.email}" />
+
+				<p:outputLabel value="CPF/CNPJ" for="documentoReceitaFederal" />
+				<p:inputText id="documentoReceitaFederal" size="20" maxlength="14"
+					value="#{cadastroClientesBean.cliente.documentoReceitaFederal}" />
+
+
+				<p:outputLabel value="Tipo Cliente" for="tipo" />
+				<p:selectOneMenu id="tipo"
+					value="#{cadastroClientesBean.cliente.tipo}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{cadastroClientesBean.tipoCliente}"
+						var="tipoCliente" itemValue="#{tipoCliente}"
+						itemLabel="#{tipoCliente.descricao}" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

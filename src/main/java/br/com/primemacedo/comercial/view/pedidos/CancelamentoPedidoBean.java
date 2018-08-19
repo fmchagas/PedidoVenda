@@ -31,7 +31,7 @@ public class CancelamentoPedidoBean implements Serializable {
 			this.pedido = this.cancelamentoPedidoService.cancelar(this.pedido);
 			this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
 
-			FacesUtil.addInfoMessage("Pedido alterado com sucesso.");
+			FacesUtil.addInfoMessage("Pedido cancelado com sucesso.");
 		} catch (NegocioException ne) {
 			FacesUtil.addErrorMessage(ne.getMessage());
 		}

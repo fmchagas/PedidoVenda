@@ -13,6 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="cliente")
@@ -38,6 +41,7 @@ public class Cliente implements Serializable{
 	}
 	
 	@Column(nullable=false, length=100)
+	@NotBlank
 	public String getNome() {
 		return nome;
 	}
@@ -55,6 +59,7 @@ public class Cliente implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false, length=10)
+	@NotNull
 	public TipoPessoa getTipo() {
 		return tipo;
 	}
@@ -63,6 +68,7 @@ public class Cliente implements Serializable{
 	}
 	
 	@Column(name="doc_receita_federal", nullable=false, length=14)
+	@NotBlank
 	public String getDocumentoReceitaFederal() {
 		return documentoReceitaFederal;
 	}

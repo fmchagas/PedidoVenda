@@ -66,7 +66,7 @@ public class Produtos implements Serializable {
 			produto = findById(produto.getId());
 			manager.remove(produto);
 			manager.flush();//tudo marcado para exclusão serão excluidos
-		} catch (PersistenceException e) {//caso item de pedito estiver referenciando lança exception
+		} catch (PersistenceException e) {//caso produto estiver referenciando lança exception
 			throw new NegocioException("Produto não pode ser excluido.");
 		}
 	}

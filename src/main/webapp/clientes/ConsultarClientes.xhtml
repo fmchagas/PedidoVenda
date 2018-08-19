@@ -20,7 +20,7 @@
 						action="#{consultarClientes.pesquisar}" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Novo" outcome="/clientes/CadastroCliente" />
+					<p:button value="Novo" outcome="/clientes/CadastroClientes" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -38,7 +38,7 @@
 
 			<p:dataTable id="clienteTable"
 				value="#{consultarClientes.listaClientes}"
-				var="cliente" emptyMessage="Nenhum registro encontrado." rows="20"
+				var="cliente" emptyMessage="Nenhum registro encontrado." rows="15"
 				paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom" style="margin-top:20px">
 
@@ -57,11 +57,11 @@
 				</p:column>
 
 				<p:column headerText="Tipo Cliente">
-					<h:outputText value="#{cliente.tipo}" />
+					<h:outputText value="#{cliente.tipo.descricao}" />
 				</p:column>
 
 				<p:column headerText="Ação" style="text-align: center; width:75px">
-					<p:button icon="ui-icon-pencil" title="Editar" outcome="/clientes/CadastroCliente">
+					<p:button icon="ui-icon-pencil" title="Editar" outcome="/clientes/CadastroClientes">
 						<f:param name="cliente" value="#{cliente.id}" />
 					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir"

@@ -47,7 +47,7 @@ public class CadastroPedidoBean implements Serializable {
 	@Produces
 	@PedidoEdicao
 	private Pedido pedido;
-	
+
 	private List<Usuario> vendedores;
 
 	private Produto produtoLinhaEditavel;
@@ -58,13 +58,17 @@ public class CadastroPedidoBean implements Serializable {
 	}
 
 	public void inicializar() {
-		if (FacesUtil.isNotPostBack()) {
-			this.vendedores = this.usuarios.vendedores();
 
-			this.pedido.adicionarItemVazio();
-
-			this.recalcularPedido();
+		if (this.pedido == null) {
+			limpar();
 		}
+
+		this.vendedores = this.usuarios.vendedores();
+
+		this.pedido.adicionarItemVazio();
+
+		this.recalcularPedido();
+
 	}
 
 	private void limpar() {
@@ -73,7 +77,8 @@ public class CadastroPedidoBean implements Serializable {
 	}
 
 	public void salvar() {
-		//Remove primeiro item da lista que sempre está vazio para depois salvar, caso tente salvar com o item vazio na lista uma nullPointerExeption será lançada
+		// Remove primeiro item da lista que sempre está vazio para depois salvar, caso
+		// tente salvar com o item vazio na lista uma nullPointerExeption será lançada
 		this.pedido.removerItemVazio();
 
 		try {
@@ -81,15 +86,15 @@ public class CadastroPedidoBean implements Serializable {
 			FacesUtil.addInfoMessage("Pedido salvo com sucesso.");
 		} catch (NegocioException ne) {
 			FacesUtil.addErrorMessage(ne.getMessage());
-		}finally {
+		} finally {
 			this.pedido.adicionarItemVazio();
 			System.out.println(":::: Adiciona Item Vazio.");
 		}
-		
+
 	}
-	
+
 	public void clienteSelecionado(SelectEvent event) {
-		pedido.setCliente((Cliente)event.getObject());
+		pedido.setCliente((Cliente) event.getObject());
 	}
 
 	public List<Produto> completarProdroduto(String nome) {
@@ -122,7 +127,7 @@ public class CadastroPedidoBean implements Serializable {
 
 				this.pedido.adicionarItemVazio();
 				this.produtoLinhaEditavel = null;
-				this.sku=null;
+				this.sku = null;
 
 				this.pedido.reccalcularValorTotal();
 			}
@@ -131,10 +136,10 @@ public class CadastroPedidoBean implements Serializable {
 
 	private boolean existeItemComProduto(Produto produto) {
 		boolean existeItem = false;
-		
+
 		for (ItemPedido item : this.getPedido().getItens()) {
 			if (produto.equals(item.getProduto())) {
-				existeItem=true;
+				existeItem = true;
 				break;
 			}
 		}
@@ -145,25 +150,23 @@ public class CadastroPedidoBean implements Serializable {
 	public List<Cliente> carregarCliente(String nome) {
 		return this.clientes.findByName(nome);
 	}
-	
+
 	public void atualizarQuantidade(ItemPedido item, int linha) {
 		if (item.getQuantidade() < 1) {
 			if (linha == 0) {
 				item.setQuantidade(1);
-			}else {
+			} else {
 				pedido.getItens().remove(linha);
 			}
-		}	
+		}
 
 		this.pedido.reccalcularValorTotal();
 	}
-	
-	
+
 	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
 		this.pedido = event.getPedido();
 	}
-	
-	
+
 	public FormaPagamento[] getFormasPagamento() {
 		return FormaPagamento.values();
 	}
@@ -204,19 +207,21 @@ public class CadastroPedidoBean implements Serializable {
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-	
+
 	public boolean isRenderResponse() {
 		return FacesContext.getCurrentInstance().getCurrentPhaseId().getName().equals("RENDER_RESPONSE");
 	}
-	
-	//hack para validar nome cliente mesmo campo sendo readonly
+
+	// hack para validar nome cliente mesmo campo sendo readonly
 	@NotBlank
 	public String getNomeCliente() {
 		return pedido.getCliente() == null ? null : pedido.getCliente().getNome();
 	}
-	//hack para evitar erro ao clicar no botão salvar.
-	//deve ser utilizado porque o campo nome cliente é readonly=true na fase de RENDER_RESPONSE, mas e readonly=false na fase de VALIDATION
+
+	// hack para evitar erro ao clicar no botão salvar.
+	// deve ser utilizado porque o campo nome cliente é readonly=true na fase de
+	// RENDER_RESPONSE, mas e readonly=false na fase de VALIDATION
 	public void setNomeCliente(String nome) {
-		
+
 	}
 }

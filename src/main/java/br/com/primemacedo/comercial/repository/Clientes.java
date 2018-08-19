@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import br.com.primemacedo.comercial.model.Cliente;
+import br.com.primemacedo.comercial.service.NegocioException;
+import br.com.primemacedo.comercial.util.jpa.Transactional;
 
 public class Clientes implements Serializable {
 
@@ -15,8 +18,20 @@ public class Clientes implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	private Cliente guardar(Cliente cliente) {
+	@Transactional
+	public Cliente guardar(Cliente cliente) {
 		return manager.merge(cliente);
+	}
+	
+	@Transactional
+	public void remover(Cliente cliente) throws NegocioException {
+		try {
+			cliente = findById(cliente.getId());
+			manager.remove(cliente);
+			manager.flush();//tudo marcado para exclusão serão excluidos
+		} catch (PersistenceException e) {//caso cliente estiver referenciando lança exception
+			throw new NegocioException("Cliente não pode ser excluido.");
+		}
 	}
 
 	public Cliente findById(Long id) {

@@ -4,28 +4,26 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
 
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.Produtos;
-import br.com.primemacedo.comercial.util.cdi.CDIServiceLocator;
 
 @FacesConverter(forClass = Produto.class)
 public class ProdutoConverter implements Converter {
 
 
-	//@Inject
+	@Inject
 	private Produtos produtosRepository;
 
-	public ProdutoConverter() {
-		//Injection de Produtos
-		produtosRepository = CDIServiceLocator.getBean(Produtos.class);
-	}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Produto retorno = null;
 
-		if (value != null) {
+		if (StringUtils.isNotEmpty(value)) {
 			Long id = new Long(value);
 
 			retorno = produtosRepository.findById(id);

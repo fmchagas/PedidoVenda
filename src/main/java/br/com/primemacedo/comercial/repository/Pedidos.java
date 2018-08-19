@@ -11,7 +11,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -57,7 +56,7 @@ public class Pedidos implements Serializable {
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeCliente())) {
-			criteria.add(Restrictions.ilike("c.nome", filtro.getNomeCliente(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("cliente.nome", filtro.getNomeCliente(), MatchMode.ANYWHERE));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeVendedor())) {
