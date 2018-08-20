@@ -29,6 +29,7 @@
     
     <http pattern="/Login.xhtml" security="none" />
     <http pattern="/Erro.xhtml" security="none" />
+     <http pattern="/logout" security="none" />
     <http pattern="/javax.faces.resource/**" security="none" />
     
 	<http auto-config="false" use-expressions="true">
@@ -37,6 +38,7 @@
 		<intercept-url pattern="/Home.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/AcessoNegado.xhtml" access="isAuthenticated()" />
 		
+		<intercept-url pattern="/relatorios/**" access="hasAnyRole('VENDEDORES', 'AUXILIARES', 'ADMINISTRADORES')" />
 		<intercept-url pattern="/dialogos/**" access="hasAnyRole('VENDEDORES', 'AUXILIARES', 'ADMINISTRADORES')" />
 		<intercept-url pattern="/pedidos/**" access="hasAnyRole('VENDEDORES', 'AUXILIARES', 'ADMINISTRADORES')" />
 		<intercept-url pattern="/clientes/**" access="hasAnyRole('VENDEDORES', 'AUXILIARES', 'ADMINISTRADORES')" />
