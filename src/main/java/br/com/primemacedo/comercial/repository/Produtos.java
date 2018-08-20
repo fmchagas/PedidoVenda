@@ -1,19 +1,20 @@
 package br.com.primemacedo.comercial.repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.filter.ProdutoFilter;
@@ -43,8 +44,35 @@ public class Produtos implements Serializable {
 			return null;
 		}
 	}
+	
+	public List<Produto> filtrados(ProdutoFilter filtro) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Produto> criteriaQuery = builder.createQuery(Produto.class);
+		List<Predicate> predicate = new ArrayList<>();
+		
+		//a linha abaixo é como se fizesse no jpql : select p from Produto p
+		Root<Produto> produtoRoot = criteriaQuery.from(Produto.class);
+		
+		
+		if (StringUtils.isNotBlank(filtro.getSku())) {
+			predicate.add(builder.equal(produtoRoot.get("sku"), filtro.getSku()));
+		}
+		
+		if (StringUtils.isNotBlank(filtro.getNome())) {
+			predicate.add(builder.like(builder.lower(produtoRoot.get("nome")), "%" + filtro.getNome().toLowerCase() + "%"));
+		}
+		
+		
+		criteriaQuery.select(produtoRoot);
+		criteriaQuery.where(predicate.toArray(new Predicate[0]));
+		criteriaQuery.orderBy(builder.asc(produtoRoot.get("nome")));
+		
+		
+		TypedQuery<Produto> query = manager.createQuery(criteriaQuery);
+		return query.getResultList();
+	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public List<Produto> filtrados(ProdutoFilter filtro) {
 		Session session = manager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Produto.class);
@@ -58,7 +86,7 @@ public class Produtos implements Serializable {
 		}
 		
 		return criteria.addOrder(Order.asc("nome")).list();
-	}
+	}*/
 
 	@Transactional
 	public void remover(Produto produto) throws NegocioException {
