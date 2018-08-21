@@ -34,7 +34,8 @@ public class Pedidos implements Serializable {
 	}
 	
 	private Criteria criarCriteriaParaFiltro(PedidoFilter filtro) {
-		Session session = manager.unwrap(Session.class);
+		Session session = (Session) manager;
+		
 		Criteria criteria = session.createCriteria(Pedido.class)
 				.createAlias("cliente", "cliente")
 				.createAlias("vendedor","v");

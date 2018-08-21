@@ -4,9 +4,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.hibernate.Session;
 
 /*@ApplicationScoped Armazena uma instancia só para a aplicação.*/
 
@@ -19,12 +20,12 @@ public class EntityManagerProducer {
 		factory = Persistence.createEntityManagerFactory("PedidoPU");
 	}
 
-	@Produces @RequestScoped //@RequestScoped criará uma EntityManager a cada requisição
-	public EntityManager createEntityManager() {
-		return factory.createEntityManager();
+	@Produces @RequestScoped //@RequestScoped criará uma EntityManager/Session a cada requisição
+	public Session createEntityManager() {
+		return (Session) factory.createEntityManager();
 	}
 	
-	public void closeEntityManager(@Disposes EntityManager menager) {//no final da requisição será chamado o @Disposes
+	public void closeEntityManager(@Disposes Session menager) {//no final da requisição será chamado o @Disposes
 		menager.close();
 	}
 }

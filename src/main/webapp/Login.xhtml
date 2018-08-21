@@ -29,11 +29,11 @@
 			<p:messages id="messages" autoUpdate="true" closable="true" />
 
 			<h:panelGrid columns="2" styleClass="grid-login">
-				<p:outputLabel value="E-mail" for="j_username" />
-				<p:inputText id="j_username" size="30" value="#{loginBean.email}" />
+				<p:outputLabel value="E-mail" for="username" />
+				<p:inputText id="username" size="30" value="#{loginBean.email}" />
 
-				<p:outputLabel value="Senha" for="j_password" />
-				<p:password id="j_password" size="30" />
+				<p:outputLabel value="Senha" for="password" />
+				<p:password id="password" size="30" />
 
 				<h:panelGroup />
 				<p:commandButton value="Login" action="#{loginBean.login}"

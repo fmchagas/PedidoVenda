@@ -9,6 +9,9 @@
 	<title>Seleção de cliente</title>
 	
 	<h:outputStylesheet library="css" name="principal.css" />
+	<style>		
+		body{margin: 10px}
+	</style>
 </h:head>
 <h:body>
 
@@ -23,6 +26,7 @@
     	<p:dataTable value="#{selecaoClienteBean.clientesFiltrados}" var="cliente"
     		style="margin-top: 20px" emptyMessage="Nenhum cliente encontrado." rows="10"
     		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+    		
     		<p:column headerText="Código" style="text-align: center; width: 40px">
     			<h:outputText value="#{cliente.id}" />
     		</p:column>

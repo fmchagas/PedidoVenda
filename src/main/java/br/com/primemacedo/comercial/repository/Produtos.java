@@ -11,11 +11,14 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.com.primemacedo.comercial.model.Categoria;
 import br.com.primemacedo.comercial.model.Produto;
 import br.com.primemacedo.comercial.repository.filter.ProdutoFilter;
 import br.com.primemacedo.comercial.service.NegocioException;
@@ -52,6 +55,8 @@ public class Produtos implements Serializable {
 		
 		//a linha abaixo é como se fizesse no jpql : select p from Produto p
 		Root<Produto> produtoRoot = criteriaQuery.from(Produto.class);
+		Fetch<Produto, Categoria> categoriaJoin = produtoRoot.fetch("categoria", JoinType.INNER);
+		categoriaJoin.fetch("categoriaPai", JoinType.INNER);
 		
 		
 		if (StringUtils.isNotBlank(filtro.getSku())) {
@@ -71,22 +76,6 @@ public class Produtos implements Serializable {
 		TypedQuery<Produto> query = manager.createQuery(criteriaQuery);
 		return query.getResultList();
 	}
-
-	/*@SuppressWarnings("unchecked")
-	public List<Produto> filtrados(ProdutoFilter filtro) {
-		Session session = manager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Produto.class);
-
-		if (StringUtils.isNotBlank(filtro.getSku())) {
-			criteria.add(Restrictions.eq("sku", filtro.getSku()));
-		}
-		
-		if (StringUtils.isNotBlank(filtro.getNome())) {
-			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-		}
-		
-		return criteria.addOrder(Order.asc("nome")).list();
-	}*/
 
 	@Transactional
 	public void remover(Produto produto) throws NegocioException {
